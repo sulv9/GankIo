@@ -1,0 +1,67 @@
+if (isSingleModuleDebug.toBoolean()){
+    if (project.name.matches("lib_.+"))
+        apply plugin: 'com.android.library'
+    else
+        apply plugin: 'com.android.application'
+}else {
+    if (project.name != "app")
+        apply plugin: 'com.android.library'
+}
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion build_versions.compile_sdk
+    buildToolsVersion build_versions.build_tools
+
+    defaultConfig {
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        versionCode version_code
+        versionName version_name
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ AROUTER_MODULE_NAME : project.getName() ]
+            }
+        }
+    }
+
+    sourceSets{
+        main{
+            if (!project.name.matches("lib_.+")){
+                if (isSingleModuleDebug.toBoolean()){
+                    manifest.srcFile 'src/main/module/AndroidManifest.xml'
+                }else {
+                    manifest.srcFile 'src/main/AndroidManifest.xml'
+                }
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    if (project.name != "lib_common")
+        implementation project(path: ':lib_common')
+    kapt deps.arouter.compiler
+}

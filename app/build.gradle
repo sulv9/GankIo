@@ -1,0 +1,15 @@
+apply plugin: 'com.android.application'
+apply from: '../config.gradle'
+
+android {
+    defaultConfig {
+        applicationId "com.aefottt.gankio"
+    }
+}
+
+dependencies {
+    if (!isSingleModuleDebug.toBoolean()){
+        implementation project(path: ':module_article')
+        implementation project(path: ':module_user')
+    }
+}

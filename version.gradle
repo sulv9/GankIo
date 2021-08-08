@@ -1,0 +1,40 @@
+/** 版本号管理 **/
+ext.version_code = 1
+ext.version_name = "1.0"
+/** 构建版本管理 **/
+def build_versions = [:]
+build_versions.compile_sdk = 30
+build_versions.build_tools = "30.0.3"
+build_versions.min_sdk = 21
+build_versions.target_sdk = 30
+ext.build_versions = build_versions
+/** 依赖库版本 **/
+// kotlin
+def version_kotlin = "1.5.21"
+def version_core = "1.3.0"
+// ui
+def version_constraint = "2.0.4"
+def version_material = "1.3.0"
+def version_appcompat = "1.2.0"
+// ARouter
+def version_arouter = "1.5.0"
+def version_arouter_compiler ="1.2.2"
+/** 依赖库 **/
+def deps = [:]
+def kotlin = [:]
+kotlin.runtime = "org.jetbrains.kotlin:kotlin-stdlib:$version_kotlin"
+kotlin.core = "androidx.core:core-ktx:$version_core"
+deps.kotlin = kotlin
+
+def support = [:]
+support.constraint = "androidx.constraintlayout:constraintlayout:$version_constraint"
+support.design = "com.google.android.material:material:$version_material"
+support.appcompat = "androidx.appcompat:appcompat:$version_appcompat"
+deps.support = support
+
+def arouter = [:]
+arouter.api = "com.alibaba:arouter-api:$version_arouter"
+arouter.compiler = "com.alibaba:arouter-compiler:$version_arouter_compiler"
+deps.arouter = arouter
+
+ext.deps = deps

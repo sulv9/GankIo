@@ -1,0 +1,21 @@
+apply from: '../config.gradle'
+
+dependencies {
+    // 通用依赖库
+
+    api fileTree(dir: "libs", include: ["*.jar"])
+    // 单元测试
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    // kotlin
+    api deps.kotlin.runtime
+    api deps.kotlin.core
+    // ui
+    api deps.support.constraint
+    api deps.support.design
+    api deps.support.appcompat
+    api 'com.squareup.retrofit2:retrofit:2.9.0'
+    api deps.arouter.api
+}
